@@ -14,6 +14,7 @@ import Container from './Partials/Container';
 import FormButton from './Partials/Button';
 import Paper from '@mui/material/Paper';
 import FootbalPitch from '../../Img/football-pitch.jpg';
+import { StyledLink } from '../Navbar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -65,7 +66,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 			<Container
 				direction="column"
 				sx={{
-					backgroundColor: 'green',
+					backgroundColor: '#F2F2F2',
 					justifyContent: 'center',
 					minHeight: '300px',
 				}}
@@ -88,7 +89,9 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 					</Typography>
 				</Grid> */}
 				<Grid item>
-					<FormButton text="Obstaw mecz" />
+					<StyledLink to="/obstaw-mecz">
+						<FormButton text="Obstaw mecz" />
+					</StyledLink>
 				</Grid>
 			</Container>
 

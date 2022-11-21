@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Box, Grid, List, ListItemButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { SignOut } from '../App';
 import Logo from './Logo';
 
 export const StyledLink = styled(Link)({
@@ -65,13 +66,13 @@ const Navbar = () => {
 							</ListItemButton>
 						</StyledLink>
 
-						<StyledLink to="/about-us">
+						<StyledLink to="/obstaw-mecz">
 							<ListItemButton
 								sx={{
-									fontWeight: selectedIndex === '/about-us' ? 600 : 400,
+									fontWeight: selectedIndex === '/obstaw-mecz' ? 600 : 400,
 								}}
-								selected={selectedIndex === '/about-us'}
-								onClick={(event) => handleListItemClick(event, '/about-us')}
+								selected={selectedIndex === '/obstaw-mecz'}
+								onClick={(event) => handleListItemClick(event, '/obstaw-mecz')}
 							>
 								Obstaw mecz
 							</ListItemButton>
@@ -89,17 +90,19 @@ const Navbar = () => {
 							</ListItemButton>
 						</StyledLink> */}
 
-						<StyledLink to="/contact">
+						<StyledLink to="/regulamin">
 							<ListItemButton
 								sx={{
-									fontWeight: selectedIndex === '/contact' ? 600 : 400,
+									fontWeight: selectedIndex === '/regulamin' ? 600 : 400,
 								}}
-								selected={selectedIndex === '/contact'}
-								onClick={(event) => handleListItemClick(event, '/contact')}
+								selected={selectedIndex === '/regulamin'}
+								onClick={(event) => handleListItemClick(event, '/regulamin')}
 							>
 								Regulamin
 							</ListItemButton>
 						</StyledLink>
+
+						<SignOut />
 					</List>
 				</Box>
 			</Grid>

@@ -3,7 +3,7 @@ import { memo } from 'react';
 import Container from '../LandingPage/Partials/Container';
 import List from './Partials/List';
 
-function Contact() {
+function Regulamin() {
 	return (
 		<Container
 			direction="column"
@@ -37,4 +37,4 @@ function Contact() {
 	);
 }
 
-export default memo(Contact);
+export default memo(Regulamin);

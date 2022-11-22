@@ -23,7 +23,7 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 		<Container
 			className="footer"
 			sx={{
-				backgroundColor: '#F2F2F2',
+				backgroundColor: '#8A1538',
 				justifyContent: 'space-around',
 				minHeight: '200px',
 			}}

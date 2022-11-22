@@ -32,6 +32,7 @@ const Navbar = () => {
 			height="70px"
 			alignItems="center"
 			flexWrap="nowrap"
+			sx={{bgcolor:'#8A1538'}}
 		>
 			<Grid item sx={{ minWidth: '250px' }}>
 				<Logo />
@@ -42,7 +43,7 @@ const Navbar = () => {
 					sx={{
 						width: '100%',
 						maxWidth: 500,
-						bgcolor: 'background.paper',
+						bgcolor: '#8A1538',
 					}}
 				>
 					<List

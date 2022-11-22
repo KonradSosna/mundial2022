@@ -9,7 +9,7 @@ import NavbarMobile from './Components/NavbarMobile';
 import FormButton from './Components/LandingPage/Partials/Button';
 
 // import 'firebase/auth';
-// import 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import {
 	getAuth,
@@ -31,7 +31,8 @@ const app = initializeApp({
 	measurementId: 'G-SXFE8MZ8QD',
 });
 
-const authz = getAuth(app);
+export const db = getFirestore(app);
+export const authz = getAuth(app);
 
 onAuthStateChanged(authz, (user) => {
 	if (user) {
@@ -90,8 +91,6 @@ function App() {
 	const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
 	const user = useAuthState(authz);
-
-	console.log(user[0]?.photoURL);
 
 	return (
 		<div className="App">

@@ -126,7 +126,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 													justifyContent="center"
 													alignItems="center"
 													sx={{
-														width: '600px',
+														maxWidth: '600px',
 														height: '80px',
 													}}
 													direction="row"

@@ -8,7 +8,7 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 			sx={{
 				backgroundColor: 'transparent',
 				justifyContent: 'space-around',
-				minHeight: '200px',
+				minHeight: '300px',
 			}}
 			direction={isMobile ? 'column' : 'row'}
 		>

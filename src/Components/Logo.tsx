@@ -19,9 +19,17 @@ function Logo() {
 				cursor: location.pathname === '/insurance' ? 'default' : 'pointer',
 			}}
 		>
-			<Grid container gap={2} alignItems="center" color="white">
+			<Grid
+				container
+				gap={2}
+				alignItems="center"
+				justifyContent="center"
+				color="white"
+			>
 				<StyledTypography variant="caption">Ograć Buka</StyledTypography>
-				<StyledTypography variant="caption" style={{color:'#FF3838'}}>Qatar 2022</StyledTypography>
+				<StyledTypography variant="caption" style={{ color: '#FF3838' }}>
+					Qatar 2022
+				</StyledTypography>
 				<SportsSoccerIcon color="inherit" />
 			</Grid>
 		</StyledLink>

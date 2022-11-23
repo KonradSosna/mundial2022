@@ -1,8 +1,9 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CSSProperties } from '@mui/styled-engine';
 import { FC, memo } from 'react';
+import { ButtonProps } from '@mui/material';
 
-type TButtonProps = {
+interface TButtonProps extends ButtonProps {
 	text: string;
 	variant?: 'contained' | 'outlined' | 'text';
 	sx?: CSSProperties | any;
@@ -10,7 +11,7 @@ type TButtonProps = {
 	disable?: boolean;
 	loading?: boolean;
 	type?: 'button' | 'submit' | 'reset';
-};
+}
 
 const FormButton: FC<TButtonProps> = ({
 	text,
@@ -20,6 +21,7 @@ const FormButton: FC<TButtonProps> = ({
 	disable,
 	loading,
 	type,
+	...rest
 }) => {
 	return (
 		<LoadingButton
@@ -28,17 +30,20 @@ const FormButton: FC<TButtonProps> = ({
 			type={type}
 			disabled={disable}
 			variant={variant ? variant : 'contained'}
+			{...rest}
 			sx={{
-				backgroundColor: 'black',
-				width: '200px',
-				height: '50px',
+				backgroundColor: 'transparent',
+				padding: '0 20px',
+				fontWeight: '700',
 				textTransform: 'capitalize',
-				fontSize: '15px',
+				fontSize: '26px',
+				border: '2px solid red',
+				fontFamily: 'Poppins, sans-serif',
+				color: '#fff !important',
 				...sx,
 
 				'&:hover': {
-					backgroundColor: 'gray',
-					color: 'white',
+					backgroundColor: '#FF3838',
 				},
 			}}
 		>

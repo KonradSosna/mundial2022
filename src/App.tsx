@@ -20,6 +20,7 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Logo from './Components/Logo';
 // import { useCollectionData } from 'react-firebase-hooks/firestore';
+import GoogleIcon from '@mui/icons-material/Google';
 
 const app = initializeApp({
 	apiKey: 'AIzaSyBwMGQeuUtnIat0IEfSF1q_gB20wm875Ds',
@@ -52,15 +53,13 @@ const SignIn = () => {
 		<Grid
 			container
 			direction="column"
-			width="450px"
 			alignItems="center"
 			justifyContent="space-evenly"
-			style={{
+			sx={{
 				position: 'absolute',
 				top: '50%',
 				left: '50%',
 				transform: 'translate(-50%, -50%)',
-				border: '1px solid black',
 			}}
 		>
 			<Grid item margin="30px">
@@ -68,7 +67,11 @@ const SignIn = () => {
 			</Grid>
 
 			<Grid item margin="30px">
-				<FormButton text="Sign in with Google" onClick={signInWithGoogle} />
+				<FormButton
+					text="Sign in"
+					onClick={signInWithGoogle}
+					endIcon={<GoogleIcon />}
+				/>
 			</Grid>
 		</Grid>
 	);
@@ -79,7 +82,11 @@ export const SignOut = () => {
 		authz.currentUser && (
 			<Grid container>
 				<Grid item>
-					<FormButton text="Wyloguj" onClick={() => authz.signOut()} />
+					<FormButton
+						text="Wyloguj"
+						onClick={() => authz.signOut()}
+						sx={{ fontSize: '16px', height: '50px', textTransform: 'uppercase' }}
+					/>
 				</Grid>
 			</Grid>
 		)
@@ -101,7 +108,6 @@ function App() {
 					<Routes>
 						<Route path="/" element={<LandingPage isMobile={isMobile} />} />
 						<Route path="/obstaw-mecz" element={<ObstawMecz />} />
-						<Route path="/claim-report" />
 						<Route path="/regulamin" element={<Regulamin />} />
 					</Routes>
 

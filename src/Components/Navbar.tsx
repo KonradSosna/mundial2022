@@ -10,6 +10,24 @@ export const StyledLink = styled(Link)({
 	textDecoration: 'none',
 });
 
+export const StlyedListItemButton = styled(ListItemButton)({
+	backgroundColor: 'transparent',
+	padding: '0 20px',
+	fontWeight: '700',
+	textTransform: 'uppercase',
+	fontSize: '16px',
+	border: '2px solid red',
+	fontFamily: 'Poppins, sans-serif',
+	color: '#fff !important',
+	height: '50px',
+	margin: '0 10px',
+	textAlign: 'center',
+
+	'&:hover': {
+		backgroundColor: '#FF3838',
+	},
+});
+
 const Navbar = () => {
 	const location = useLocation();
 	const [selectedIndex, setSelectedIndex] = useState(location.pathname);
@@ -32,7 +50,6 @@ const Navbar = () => {
 			height="70px"
 			alignItems="center"
 			flexWrap="nowrap"
-			sx={{bgcolor:'#8A1538'}}
 		>
 			<Grid item sx={{ minWidth: '250px' }}>
 				<Logo />
@@ -43,7 +60,6 @@ const Navbar = () => {
 					sx={{
 						width: '100%',
 						maxWidth: 500,
-						bgcolor: '#8A1538',
 					}}
 				>
 					<List
@@ -56,19 +72,16 @@ const Navbar = () => {
 						}}
 					>
 						<StyledLink to="/">
-							<ListItemButton
-								sx={{
-									fontWeight: selectedIndex === '/' ? 600 : 400,
-								}}
+							<StlyedListItemButton
 								selected={selectedIndex === '/'}
 								onClick={(event) => handleListItemClick(event, '/')}
 							>
 								Tabela wyników
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
 
 						<StyledLink to="/obstaw-mecz">
-							<ListItemButton
+							<StlyedListItemButton
 								sx={{
 									fontWeight: selectedIndex === '/obstaw-mecz' ? 600 : 400,
 								}}
@@ -76,23 +89,11 @@ const Navbar = () => {
 								onClick={(event) => handleListItemClick(event, '/obstaw-mecz')}
 							>
 								Obstaw mecz
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
-						{/* 
-						<StyledLink to="/claim-report">
-							<ListItemButton
-								sx={{
-									fontWeight: selectedIndex === '/claim-report' ? 600 : 400,
-								}}
-								selected={selectedIndex === '/claim-report'}
-								onClick={(event) => handleListItemClick(event, '/claim-report')}
-							>
-								Claim report
-							</ListItemButton>
-						</StyledLink> */}
 
 						<StyledLink to="/regulamin">
-							<ListItemButton
+							<StlyedListItemButton
 								sx={{
 									fontWeight: selectedIndex === '/regulamin' ? 600 : 400,
 								}}
@@ -100,7 +101,7 @@ const Navbar = () => {
 								onClick={(event) => handleListItemClick(event, '/regulamin')}
 							>
 								Regulamin
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
 
 						<SignOut />

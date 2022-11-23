@@ -1,9 +1,9 @@
-import { Grid, ListItemButton } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Container from './LandingPage/Partials/Container';
 import Logo from './Logo';
-import { StyledLink } from './Navbar';
+import { StlyedListItemButton, StyledLink } from './Navbar';
 
 function Footer({ isMobile }: { isMobile: boolean }) {
 	const location = useLocation();
@@ -23,7 +23,7 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 		<Container
 			className="footer"
 			sx={{
-				backgroundColor: '#8A1538',
+				backgroundColor: 'transparent',
 				justifyContent: 'space-around',
 				minHeight: '200px',
 			}}
@@ -51,7 +51,7 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 				>
 					<Grid item>
 						<StyledLink to="/">
-							<ListItemButton
+							<StlyedListItemButton
 								sx={{
 									fontWeight: selectedIndex === '/' ? 600 : 400,
 								}}
@@ -59,12 +59,12 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 								onClick={(event) => handleListItemClick(event, '/')}
 							>
 								Tabela wyników
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
 					</Grid>
 					<Grid item>
 						<StyledLink to="/about-us">
-							<ListItemButton
+							<StlyedListItemButton
 								sx={{
 									fontWeight: selectedIndex === '/about-us' ? 600 : 400,
 								}}
@@ -72,12 +72,12 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 								onClick={(event) => handleListItemClick(event, '/about-us')}
 							>
 								Obstaw mecz
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
 					</Grid>
 					<Grid item>
 						<StyledLink to="/contact">
-							<ListItemButton
+							<StlyedListItemButton
 								sx={{
 									fontWeight: selectedIndex === '/contact' ? 600 : 400,
 								}}
@@ -85,7 +85,7 @@ function Footer({ isMobile }: { isMobile: boolean }) {
 								onClick={(event) => handleListItemClick(event, '/contact')}
 							>
 								Regulamin
-							</ListItemButton>
+							</StlyedListItemButton>
 						</StyledLink>
 					</Grid>
 				</Grid>

@@ -130,7 +130,7 @@ export const matches = [
 		{
 			id: 12,
 			leftTeam: 'Belgia',
-			rightTeam: 'Kanaada',
+			rightTeam: 'Kanada',
 			leftScore: 0,
 			rightScore: 0,
 			leftFlag: 'BE',

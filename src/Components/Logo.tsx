@@ -6,7 +6,7 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
 const StyledTypography = styled(Typography)`
 	font-weight: 700;
-	font-size: 25px;
+	font-size: 40px;
 `;
 
 function Logo() {
@@ -19,11 +19,10 @@ function Logo() {
 				cursor: location.pathname === '/insurance' ? 'default' : 'pointer',
 			}}
 		>
-			<Grid container gap={2} alignItems="center">
-				<StyledTypography variant="caption">
-					Ograć Buka Qatar 2022
-				</StyledTypography>
-				<SportsSoccerIcon />
+			<Grid container gap={2} alignItems="center" color="white">
+				<StyledTypography variant="caption">Ograć Buka</StyledTypography>
+				<StyledTypography variant="caption" style={{color:'#FF3838'}}>Qatar 2022</StyledTypography>
+				<SportsSoccerIcon color="inherit" />
 			</Grid>
 		</StyledLink>
 	);

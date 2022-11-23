@@ -18,12 +18,13 @@ import { StyledLink } from '../Navbar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: theme.palette.common.black,
-		color: theme.palette.common.white,
+		backgroundColor: 'black',
+		color: 'white',
 		fontSize: 24,
+		fontWeight: 600,
 	},
 	[`&.${tableCellClasses.body}`]: {
-		fontSize: 20,
+		fontSize: 24,
 		fontWeight: 600,
 	},
 }));
@@ -42,23 +43,23 @@ const styles = {
 	paperContainer: {
 		backgroundImage: `url(${FootbalPitch})`,
 		backgroundSize: 'cover',
-		width: '700px',
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'center',
+		backgr: 'transparent',
+		border: '1px solid white',
+		borderRadius: '50px',
 	},
 };
 
 const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
-	function createData(name: string, points: number) {
-		return { name, points };
-	}
-
 	const rows = [
-		createData('Konrad Sosna', 100),
-		createData('Tomasz Stańczak', 0),
-		createData('Grzesiu Kę', 0),
-		createData('Grzesiu Zi', 0),
-		createData('Ariel Stańczak', 0),
-		createData('Tadeusz Kubiak', 0),
-		createData('Porky', 0),
+		{ name: 'Konrad Sosna', points: 100 },
+		{ name: 'Tomasz Stańczak', points: 100 },
+		{ name: 'Grzesiu Kę', points: 100 },
+		{ name: 'Grzesiu Zi', points: 100 },
+		{ name: 'Ariel Stańczak', points: 100 },
+		{ name: 'Tadeusz Kubiak', points: 100 },
+		{ name: 'Porky', points: 100 },
 	];
 
 	return (
@@ -66,7 +67,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 			<Container
 				direction="column"
 				sx={{
-					backgroundColor: '#F2F2F2',
+					backgroundColor: '#transparent',
 					justifyContent: 'center',
 					minHeight: '300px',
 				}}
@@ -79,15 +80,10 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 						textAlign="center"
 						variant="h1"
 					>
-						Witam w Ograć Buka Qatar 2022
+						Witam w Ograć Buka Qatar 2022!
 					</Typography>
 				</Grid>
-				{/* <Grid item>
-					<Typography fontSize={20} fontWeight={500} maxWidth="700px">
-						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis
-						error corporis explicabo labore nobis ea cum doloremque dolorem!
-					</Typography>
-				</Grid> */}
+
 				<Grid item>
 					<StyledLink to="/obstaw-mecz">
 						<FormButton text="Obstaw mecz" />
@@ -101,7 +97,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 						<TableHead>
 							<StyledTableRow>
 								<StyledTableCell align="center">Zawodnik</StyledTableCell>
-								<StyledTableCell align="center">Punkty</StyledTableCell>
+								<StyledTableCell align="left">Punkty</StyledTableCell>
 							</StyledTableRow>
 						</TableHead>
 						<TableBody>
@@ -113,7 +109,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 									<StyledTableCell align="center" component="th" scope="row">
 										{row.name}
 									</StyledTableCell>
-									<StyledTableCell align="center">{row.points}</StyledTableCell>
+									<StyledTableCell align="left">{row.points}</StyledTableCell>
 								</StyledTableRow>
 							))}
 						</TableBody>

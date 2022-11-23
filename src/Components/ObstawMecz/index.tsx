@@ -99,7 +99,7 @@ function ObstawMecz() {
 				<Grid container direction="column" rowGap={6}>
 					{matches.map((matchGroup) => (
 						<>
-							<Divider />
+							<Divider style={{backgroundColor: 'white'}} />
 							<Grid
 								container
 								direction="row"

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Box, Grid, List, ListItemButton } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SignOut } from '../App';
 import Logo from './Logo';
+import FormButton from './LandingPage/Partials/Button';
 
 export const StyledLink = styled(Link)({
 	color: 'black',
@@ -28,20 +28,7 @@ export const StlyedListItemButton = styled(ListItemButton)({
 	},
 });
 
-const Navbar = () => {
-	const location = useLocation();
-	const [selectedIndex, setSelectedIndex] = useState(location.pathname);
-
-	useEffect(() => {
-		setSelectedIndex(location.pathname);
-	}, [location]);
-
-	const handleListItemClick = (
-		_event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		index: string
-	) => {
-		setSelectedIndex(index);
-	};
+const Navbar = ({ isMobile }: { isMobile?: boolean }) => {
 	return (
 		<Grid
 			container
@@ -67,41 +54,20 @@ const Navbar = () => {
 						aria-label="main navigation bar"
 						sx={{
 							display: 'flex',
-							flexDirection: 'row',
+							flexDirection: isMobile ? 'column' : 'row',
 							fontWeight: 500,
 						}}
 					>
 						<StyledLink to="/">
-							<StlyedListItemButton
-								selected={selectedIndex === '/'}
-								onClick={(event) => handleListItemClick(event, '/')}
-							>
-								Tabela wyników
-							</StlyedListItemButton>
+							<FormButton text={'Tabela wyników'} />
 						</StyledLink>
 
 						<StyledLink to="/obstaw-mecz">
-							<StlyedListItemButton
-								sx={{
-									fontWeight: selectedIndex === '/obstaw-mecz' ? 600 : 400,
-								}}
-								selected={selectedIndex === '/obstaw-mecz'}
-								onClick={(event) => handleListItemClick(event, '/obstaw-mecz')}
-							>
-								Obstaw mecz
-							</StlyedListItemButton>
+							<FormButton text={'Obstaw mecz'} />
 						</StyledLink>
 
 						<StyledLink to="/regulamin">
-							<StlyedListItemButton
-								sx={{
-									fontWeight: selectedIndex === '/regulamin' ? 600 : 400,
-								}}
-								selected={selectedIndex === '/regulamin'}
-								onClick={(event) => handleListItemClick(event, '/regulamin')}
-							>
-								Regulamin
-							</StlyedListItemButton>
+							<FormButton text={'Regulamin'} />
 						</StyledLink>
 
 						<SignOut />

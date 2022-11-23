@@ -2,6 +2,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { CSSProperties } from '@mui/styled-engine';
 import { FC, memo } from 'react';
 import { ButtonProps } from '@mui/material';
+import { motion } from 'framer-motion';
 
 interface TButtonProps extends ButtonProps {
 	text: string;
@@ -24,31 +25,43 @@ const FormButton: FC<TButtonProps> = ({
 	...rest
 }) => {
 	return (
-		<LoadingButton
-			loading={loading}
-			onClick={onClick}
-			type={type}
-			disabled={disable}
-			variant={variant ? variant : 'contained'}
-			{...rest}
-			sx={{
-				backgroundColor: 'transparent',
-				padding: '0 20px',
-				fontWeight: '700',
-				textTransform: 'capitalize',
-				fontSize: '26px',
-				border: '2px solid red',
-				fontFamily: 'Poppins, sans-serif',
-				color: '#fff !important',
-				...sx,
+		<motion.div whileHover={{ scale: 1.1 }}>
+			<LoadingButton
+				loading={loading}
+				onClick={onClick}
+				type={type}
+				disabled={disable}
+				variant={variant ? variant : 'contained'}
+				{...rest}
+				sx={{
+					backgroundColor: 'transparent',
+					padding: '0 20px',
+					fontWeight: '700',
+					textTransform: 'uppercase',
+					fontSize: '14px',
+					border: '2px solid red',
+					fontFamily: 'Poppins, sans-serif',
+					color: '#fff',
+					height: '50px',
+					margin: '10px',
+					textAlign: 'center',
+					justifyContent: 'center',
+					...sx,
 
-				'&:hover': {
-					backgroundColor: '#FF3838',
-				},
-			}}
-		>
-			{text}
-		</LoadingButton>
+					'&:hover': {
+						backgroundColor: '#FF3838',
+					},
+
+					'&:disabled': {
+						backgroundColor: '#574c4c',
+						borderColor: '#a79c9c',
+						color: 'gray',
+					},
+				}}
+			>
+				{text}
+			</LoadingButton>
+		</motion.div>
 	);
 };
 

@@ -9,7 +9,11 @@ function Regulamin() {
 			direction="column"
 			devider
 			sx={{
+				display: 'flex',
 				justifyContent: 'center',
+				alignItems: 'center',
+				padding: '20px 50px',
+				width: '100%',
 			}}
 		>
 			<Grid item>

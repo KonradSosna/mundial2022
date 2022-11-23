@@ -2,13 +2,30 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
 import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { StyledLink } from './Navbar';
 import { useLocation } from 'react-router-dom';
+import { SignOut } from '../App';
+import { ListItemButton } from '@mui/material';
+import styled from '@emotion/styled';
 
 type Anchor = 'left';
+
+export const StlyedListItemButton = styled(ListItemButton)({
+	backgroundColor: 'transparent',
+	padding: '0 20px',
+	fontWeight: '700',
+	textTransform: 'uppercase',
+	fontSize: '16px',
+	border: '2px solid red',
+	fontFamily: 'Poppins, sans-serif',
+	color: '#fff',
+	height: '50px',
+	margin: '10px',
+	textAlign: 'center',
+	justifyContent: 'center',
+});
 
 function NavbarMobile() {
 	const [state, setState] = useState({
@@ -44,7 +61,11 @@ function NavbarMobile() {
 
 	const list = (anchor: Anchor) => (
 		<Box
-			sx={{ width: 250 }}
+			sx={{
+				width: 250,
+				backgroundColor: 'rgba(6, 5, 28, 0.7)',
+				height: '100%',
+			}}
 			role="presentation"
 			onClick={toggleDrawer(anchor, false)}
 			onKeyDown={toggleDrawer(anchor, false)}
@@ -60,53 +81,46 @@ function NavbarMobile() {
 				}}
 			>
 				<StyledLink to="/">
-					<ListItemButton
-						sx={{ fontWeight: selectedIndex === '/insurance' ? 600 : 400 }}
-						selected={selectedIndex === '/insurance'}
-						onClick={(event) => handleListItemClick(event, '/insurance')}
+					<StlyedListItemButton
+						selected={selectedIndex === '/'}
+						onClick={(event) => handleListItemClick(event, '/')}
 					>
-						Insurance
-					</ListItemButton>
+						Tabela wyników
+					</StlyedListItemButton>
 				</StyledLink>
 
-				<StyledLink to="/about-us">
-					<ListItemButton
-						sx={{ fontWeight: selectedIndex === '/about-us' ? 600 : 400 }}
-						selected={selectedIndex === '/about-us'}
-						onClick={(event) => handleListItemClick(event, '/about-us')}
-					>
-						About us
-					</ListItemButton>
-				</StyledLink>
-
-				<StyledLink to="/claim-report">
-					<ListItemButton
+				<StyledLink to="/obstaw-mecz">
+					<StlyedListItemButton
 						sx={{
-							fontWeight: selectedIndex === '/claim-report' ? 600 : 400,
+							fontWeight: selectedIndex === '/obstaw-mecz' ? 600 : 400,
 						}}
-						selected={selectedIndex === '/claim-report'}
-						onClick={(event) => handleListItemClick(event, '/claim-report')}
+						selected={selectedIndex === '/obstaw-mecz'}
+						onClick={(event) => handleListItemClick(event, '/obstaw-mecz')}
 					>
-						Claim report
-					</ListItemButton>
+						Obstaw mecz
+					</StlyedListItemButton>
 				</StyledLink>
 
-				<StyledLink to="/contact">
-					<ListItemButton
-						sx={{ fontWeight: selectedIndex === '/contact' ? 600 : 400 }}
-						selected={selectedIndex === '/contact'}
-						onClick={(event) => handleListItemClick(event, '/contact')}
+				<StyledLink to="/regulamin">
+					<StlyedListItemButton
+						sx={{
+							fontWeight: selectedIndex === '/regulamin' ? 600 : 400,
+						}}
+						selected={selectedIndex === '/regulamin'}
+						onClick={(event) => handleListItemClick(event, '/regulamin')}
 					>
-						Contact
-					</ListItemButton>
+						Regulamin
+					</StlyedListItemButton>
 				</StyledLink>
+
+				<SignOut />
 			</List>
 		</Box>
 	);
 
 	return (
 		<div>
-			<Button onClick={toggleDrawer('left', true)} sx={{ color: 'black' }}>
+			<Button onClick={toggleDrawer('left', true)} sx={{ color: '#FF3838' }}>
 				<MenuIcon fontSize="large" />
 			</Button>
 			<Drawer

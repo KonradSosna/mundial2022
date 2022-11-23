@@ -9,12 +9,23 @@ import {
 	TableRow,
 	Typography,
 	tableCellClasses,
+	CircularProgress,
 } from '@mui/material';
 import Container from './Partials/Container';
 import FormButton from './Partials/Button';
 import Paper from '@mui/material/Paper';
 import FootbalPitch from '../../Img/football-pitch.jpg';
 import { StyledLink } from '../Navbar';
+import { useState } from 'react';
+import {
+	collection,
+	DocumentData,
+	query,
+	orderBy,
+	onSnapshot,
+} from 'firebase/firestore';
+import { db } from '../../App';
+import { motion } from 'framer-motion';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -52,15 +63,18 @@ const styles = {
 };
 
 const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
-	const rows = [
-		{ name: 'Konrad Sosna', points: 100 },
-		{ name: 'Tomasz Stańczak', points: 100 },
-		{ name: 'Grzesiu Kę', points: 100 },
-		{ name: 'Grzesiu Zi', points: 100 },
-		{ name: 'Ariel Stańczak', points: 100 },
-		{ name: 'Tadeusz Kubiak', points: 100 },
-		{ name: 'Porky', points: 100 },
-	];
+	const [loading, setLoading] = useState(false);
+	const [users, setUsers] = useState<DocumentData[]>([]);
+
+	onSnapshot(
+		query(collection(db, 'users'), orderBy('score', 'desc')),
+		(snapshot) => {
+			setLoading(true);
+			const usersData = snapshot.docs.map((doc) => doc.data());
+			setUsers(usersData);
+			setLoading(false);
+		}
+	);
 
 	return (
 		<>
@@ -72,23 +86,27 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 					minHeight: '300px',
 				}}
 			>
-				<Grid item>
-					<Typography
-						fontSize={40}
-						fontWeight={600}
-						textTransform="capitalize"
-						textAlign="center"
-						variant="h1"
-					>
-						Witam w Ograć Buka Qatar 2022!
-					</Typography>
-				</Grid>
+				<motion.div animate={{ x: 0 }} initial={{ x: -300 }}>
+					<Grid item>
+						<Typography
+							fontSize={40}
+							fontWeight={600}
+							textTransform="capitalize"
+							textAlign="center"
+							variant="h1"
+						>
+							Witam w Ograć Buka Qatar 2022!
+						</Typography>
+					</Grid>
+				</motion.div>
 
-				<Grid item>
-					<StyledLink to="/obstaw-mecz">
-						<FormButton text="Obstaw mecz" />
-					</StyledLink>
-				</Grid>
+				<motion.div animate={{ x: 0 }} initial={{ x: -300 }}>
+					<Grid item>
+						<StyledLink to="/obstaw-mecz">
+							<FormButton text="Obstaw mecz" />
+						</StyledLink>
+					</Grid>
+				</motion.div>
 			</Container>
 
 			<Container direction="row">
@@ -97,21 +115,27 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 						<TableHead>
 							<StyledTableRow>
 								<StyledTableCell align="center">Zawodnik</StyledTableCell>
-								<StyledTableCell align="left">Punkty</StyledTableCell>
+								<StyledTableCell align="justify">Punkty</StyledTableCell>
 							</StyledTableRow>
 						</TableHead>
 						<TableBody>
-							{rows.map((row) => (
-								<StyledTableRow
-									key={row.name}
-									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-								>
-									<StyledTableCell align="center" component="th" scope="row">
-										{row.name}
-									</StyledTableCell>
-									<StyledTableCell align="left">{row.points}</StyledTableCell>
-								</StyledTableRow>
-							))}
+							{loading ? (
+								<CircularProgress />
+							) : (
+								users.map((row) => (
+									<StyledTableRow
+										key={row.name}
+										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+									>
+										<StyledTableCell align="center" component="th" scope="row">
+											{`${row.name} ${row.surname}`}
+										</StyledTableCell>
+										<StyledTableCell align="justify">
+											{row.score}
+										</StyledTableCell>
+									</StyledTableRow>
+								))
+							)}
 						</TableBody>
 					</Table>
 				</TableContainer>

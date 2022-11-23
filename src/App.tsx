@@ -4,11 +4,11 @@ import LandingPage from './Components/LandingPage';
 import ObstawMecz from './Components/ObstawMecz';
 import Regulamin from './Components/Regulamin';
 import Navbar from './Components/Navbar';
-import { Grid, useMediaQuery, useTheme } from '@mui/material';
+import { CircularProgress, Grid, useMediaQuery, useTheme } from '@mui/material';
 import NavbarMobile from './Components/NavbarMobile';
 import FormButton from './Components/LandingPage/Partials/Button';
+import { motion } from 'framer-motion';
 
-// import 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import {
@@ -19,8 +19,8 @@ import {
 } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Logo from './Components/Logo';
-// import { useCollectionData } from 'react-firebase-hooks/firestore';
 import GoogleIcon from '@mui/icons-material/Google';
+import Container from './Components/LandingPage/Partials/Container';
 
 const app = initializeApp({
 	apiKey: 'AIzaSyBwMGQeuUtnIat0IEfSF1q_gB20wm875Ds',
@@ -50,44 +50,55 @@ const SignIn = () => {
 	};
 
 	return (
-		<Grid
-			container
-			direction="column"
-			alignItems="center"
-			justifyContent="space-evenly"
-			sx={{
-				position: 'absolute',
-				top: '50%',
-				left: '50%',
-				transform: 'translate(-50%, -50%)',
-			}}
+		<motion.div
+			animate={{ scale: 1 }}
+			initial={{ scale: 0 }}
+			transition={{ duration: 1 }}
 		>
-			<Grid item margin="30px">
-				<Logo />
-			</Grid>
+			<Grid
+				container
+				direction="column"
+				alignItems="center"
+				justifyContent="space-evenly"
+				minWidth={window.innerWidth}
+				sx={{
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
+			>
+				<Grid item margin="30px">
+					<Logo />
+				</Grid>
 
-			<Grid item margin="30px">
-				<FormButton
-					text="Sign in"
-					onClick={signInWithGoogle}
-					endIcon={<GoogleIcon />}
-				/>
+				<Grid item margin="30px">
+					<FormButton
+						text="Sign in"
+						onClick={signInWithGoogle}
+						endIcon={<GoogleIcon />}
+					/>
+				</Grid>
 			</Grid>
-		</Grid>
+		</motion.div>
 	);
 };
 
 export const SignOut = () => {
 	return (
 		authz.currentUser && (
-			<Grid container>
-				<Grid item>
-					<FormButton
-						text="Wyloguj"
-						onClick={() => authz.signOut()}
-						sx={{ fontSize: '16px', height: '50px', textTransform: 'uppercase' }}
-					/>
-				</Grid>
+			<Grid item>
+				<FormButton
+					text="Wyloguj"
+					onClick={() => authz.signOut()}
+					sx={{
+						fontSize: '16px',
+						textTransform: 'uppercase',
+						width: '-webkit-fill-available',
+						height: '50px',
+						margin: '10px',
+					}}
+				/>
 			</Grid>
 		)
 	);
@@ -97,24 +108,47 @@ function App() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-	const user = useAuthState(authz);
+	const [user, loading] = useAuthState(authz);
 
 	return (
 		<div className="App">
-			{user[0] ? (
+			{loading ? (
+				<Container
+					direction="column"
+					sx={{
+						backgroundColor: 'transparent',
+						justifyContent: 'center',
+						minHeight: '100vh',
+					}}
+				>
+					<CircularProgress />
+				</Container>
+			) : user ? (
 				<>
 					{!isMobile ? <Navbar /> : <NavbarMobile />}
 
 					<Routes>
 						<Route path="/" element={<LandingPage isMobile={isMobile} />} />
-						<Route path="/obstaw-mecz" element={<ObstawMecz />} />
+						<Route
+							path="/obstaw-mecz"
+							element={<ObstawMecz isMobile={isMobile} />}
+						/>
 						<Route path="/regulamin" element={<Regulamin />} />
 					</Routes>
 
 					<Footer isMobile={isMobile} />
 				</>
 			) : (
-				<SignIn />
+				<Container
+					direction="column"
+					sx={{
+						backgroundColor: 'transparent',
+						justifyContent: 'center',
+						minHeight: '100vh',
+					}}
+				>
+					<SignIn />
+				</Container>
 			)}
 		</div>
 	);

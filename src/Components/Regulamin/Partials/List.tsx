@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { List, ListItem } from '@mui/material';
 import { memo } from 'react';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
 const StyledListItem = styled(ListItem)({
 	listStyleType: 'disc',

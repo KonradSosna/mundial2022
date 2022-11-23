@@ -5,7 +5,7 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import Container from '../LandingPage/Partials/Container';
 import FormButton from '../LandingPage/Partials/Button';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -13,20 +13,41 @@ import Flag from 'react-world-flags';
 import { matches } from './matches';
 import {
 	collection,
-	getDocs,
 	doc,
 	setDoc,
 	DocumentData,
+	query,
+	onSnapshot,
+	where,
 } from 'firebase/firestore';
 import { db, authz } from '../../App';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { isAfter } from 'date-fns';
 
-function ObstawMecz() {
+function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	const [edit, setEdit] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [bets, setBets] = useState<DocumentData[]>();
 	const [loading, setLoading] = useState(false);
+
+	const StyledTextField = {
+		width: '60px',
+		border: '1px solid #FF3838',
+		borderRadius: '15px',
+		backgroundColor: 'rgba(165, 48, 58, 0.7)',
+
+		'& .MuiInputBase-input': {
+			color: 'white',
+		},
+
+		'&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+			border: 'none',
+		},
+
+		'& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+			border: 'none',
+		},
+	};
 
 	const user = useAuthState(authz);
 	const { register, handleSubmit } = useForm();
@@ -38,39 +59,23 @@ function ObstawMecz() {
 			leftTeam: data.leftScore,
 			rightTeam: data.rightScore,
 		};
-		// console.log(bet);
 
 		await setDoc(
 			doc(db, 'bets', `${user[0]?.displayName} ${matchId.toString()}`),
 			bet
 		);
 		setEdit(false);
-		getCities().then((betsData) => {
-			setBets(betsData);
-		});
 	};
 
-	async function getCities() {
-		await setLoading(true);
-		const betsCol = collection(db, 'bets');
-
-		const betsSnapshot = await getDocs(betsCol);
-		const betsList = betsSnapshot.docs.map((doc) => doc.data());
-
-		await setLoading(false);
-
-		return betsList;
-	}
-
-	useEffect(() => {
-		getCities()
-			.then((betsData) => {
-				setBets(betsData);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+	onSnapshot(
+		query(collection(db, 'bets'), where('uid', '==', user[0]?.uid)),
+		(snapshot) => {
+			setLoading(true);
+			const usersData = snapshot.docs.map((doc) => doc.data());
+			setBets(usersData);
+			setLoading(false);
+		}
+	);
 
 	return (
 		<>
@@ -99,12 +104,13 @@ function ObstawMecz() {
 				<Grid container direction="column" rowGap={6}>
 					{matches.map((matchGroup) => (
 						<>
-							<Divider style={{backgroundColor: 'white'}} />
+							<Divider style={{ backgroundColor: 'white' }} />
 							<Grid
 								container
-								direction="row"
+								direction={isMobile ? 'column-reverse' : 'row'}
 								alignItems="center"
 								justifyContent="space-evenly"
+								className="match"
 							>
 								<Grid item>
 									<Grid container direction="column" rowGap={4}>
@@ -120,8 +126,7 @@ function ObstawMecz() {
 													justifyContent="center"
 													alignItems="center"
 													sx={{
-														border: '1px solid black',
-														width: '500px',
+														width: '600px',
 														height: '80px',
 													}}
 													direction="row"
@@ -138,7 +143,7 @@ function ObstawMecz() {
 														{edit && index === match.id ? (
 															<TextField
 																{...register('leftScore', { required: true })}
-																style={{ width: '60px' }}
+																sx={StyledTextField}
 																type="number"
 																inputProps={{ min: 0, max: 20 }}
 																defaultValue={
@@ -164,14 +169,14 @@ function ObstawMecz() {
 														{edit && index === match.id ? (
 															<TextField
 																{...register('rightScore', { required: true })}
-																style={{ width: '60px' }}
+																sx={StyledTextField}
 																type="number"
 																inputProps={{ min: 0, max: 20 }}
 																defaultValue={
 																	bets?.find((bet) => bet.matchId === match.id)
 																		?.rightTeam
 																}
-															></TextField>
+															/>
 														) : (
 															<Typography marginRight="10px">
 																{loading ? (
@@ -198,7 +203,10 @@ function ObstawMecz() {
 																	new Date(match.dateTime)
 																)}
 																text="Edytuj"
-																sx={{ width: '20px', height: '25px' }}
+																sx={{
+																	height: '30px',
+																	fontSize: '16px',
+																}}
 																onClick={() => {
 																	setEdit(true);
 																	setIndex(match.id);
@@ -208,7 +216,11 @@ function ObstawMecz() {
 														{edit && index === match.id && (
 															<FormButton
 																text="Obstaw"
-																sx={{ width: '20px', height: '25px' }}
+																sx={{
+																	width: '80px',
+																	height: '30px',
+																	fontSize: '16px',
+																}}
 																type="submit"
 															/>
 														)}
@@ -218,12 +230,17 @@ function ObstawMecz() {
 										))}
 									</Grid>
 								</Grid>
-								<Grid item>{matchGroup[0].date}</Grid>
+								<Grid item>
+									<Typography fontWeight={600} fontSize="24px">
+										{matchGroup[0].date}
+									</Typography>
+								</Grid>
 							</Grid>
 						</>
 					))}
 				</Grid>
 			</Container>
+			<Divider style={{ backgroundColor: 'white', margin: '30px 0' }} />
 		</>
 	);
 }

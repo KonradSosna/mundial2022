@@ -139,6 +139,11 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 						</TableBody>
 					</Table>
 				</TableContainer>
+				<Grid>
+					<Typography fontSize="24px">
+						Typy innych graczy comming soon!
+					</Typography>
+				</Grid>
 			</Container>
 		</>
 	);

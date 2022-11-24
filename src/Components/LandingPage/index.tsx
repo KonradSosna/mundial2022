@@ -26,6 +26,9 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../App';
 import { motion } from 'framer-motion';
+import { isSameDay } from 'date-fns';
+import { matches } from '../ObstawMecz/matches';
+import Flag from 'react-world-flags';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -65,6 +68,7 @@ const styles = {
 const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 	const [loading, setLoading] = useState(false);
 	const [users, setUsers] = useState<DocumentData[]>([]);
+	const [bets, setBets] = useState<DocumentData[]>();
 
 	onSnapshot(
 		query(collection(db, 'users'), orderBy('score', 'desc')),
@@ -75,6 +79,22 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 			setLoading(false);
 		}
 	);
+
+	onSnapshot(query(collection(db, 'bets')), (snapshot) => {
+		setLoading(true);
+		const usersData = snapshot.docs.map((doc) => doc.data());
+		setBets(usersData);
+		setLoading(false);
+	});
+
+	const todayMatches = matches.filter(
+		(match) =>
+			match.filter((m) => isSameDay(new Date(), new Date(m.dateTime))).length >
+			0
+	);
+	const todayMatchesFiltered = [...todayMatches[0]];
+
+	console.log(bets);
 
 	return (
 		<>
@@ -139,11 +159,65 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<Grid>
-					<Typography fontSize="24px">
-						Typy innych graczy comming soon!
-					</Typography>
-				</Grid>
+			</Container>
+
+			<Container direction="column">
+				<Typography fontSize="34px" fontWeight="600" margin="30px">
+					Tak obstawiali
+				</Typography>
+
+				{users.map((user) => (
+					<Grid
+						key={user.id}
+						container
+						justifyContent="space-evenly"
+						alignItems="center"
+						borderBottom="1px solid white"
+					>
+						<Grid item>
+							<Typography fontSize="24px">
+								{user.name} {user.surname}
+							</Typography>
+						</Grid>
+						<Grid item>
+							{todayMatchesFiltered.map((match) => (
+								<Grid
+									item
+									key={match.id}
+									display="flex"
+									alignItems="center"
+									margin="10px"
+								>
+									<Typography>{match.leftTeam}</Typography>
+									<Flag
+										code={match.leftFlag}
+										fallback={<span>Unknown</span>}
+										height="16"
+										style={{ margin: '10px' }}
+									/>
+									<Typography margin="0 10px">
+										{bets?.find(
+											(bet) => bet.uid === user.id && match.id === bet.matchId
+										)?.leftTeam || 'N/A'}
+									</Typography>
+									<Typography>{'-'}</Typography>
+									<Typography margin="0 10px">
+										{bets?.find(
+											(bet) => bet.uid === user.id && match.id === bet.matchId
+										)?.rightTeam || 'N/A'}
+									</Typography>
+									<Flag
+										code={match.rightFlag}
+										fallback={<span>Unknown</span>}
+										height="16"
+										style={{ margin: '10px' }}
+									/>
+									<Typography>{match.rightTeam}</Typography>
+								</Grid>
+							))}
+						</Grid>
+					</Grid>
+				))}
 			</Container>
 		</>
 	);

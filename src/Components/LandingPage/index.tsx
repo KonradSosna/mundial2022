@@ -179,7 +179,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 							borderBottom="1px solid white"
 						>
 							<Grid item>
-								<Typography fontSize="24px">
+								<Typography fontWeight="600" fontSize="24px">
 									{user.name} {`"${user.nick}"`} {user.surname}
 								</Typography>
 							</Grid>
@@ -192,20 +192,20 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 										alignItems="center"
 										margin="10px"
 									>
-										<Typography>{match.leftTeam}</Typography>
+										<Typography fontWeight="600">{match.leftTeam}</Typography>
 										<Flag
 											code={match.leftFlag}
 											fallback={<span>Unknown</span>}
 											height="16"
 											style={{ margin: '10px' }}
 										/>
-										<Typography margin="0 10px">
+										<Typography fontWeight="600" margin="0 10px">
 											{bets?.find(
 												(bet) => bet.uid === user.id && match.id === bet.matchId
 											)?.leftTeam || 'N/A'}
 										</Typography>
 										<Typography>{'-'}</Typography>
-										<Typography margin="0 10px">
+										<Typography fontWeight="600" margin="0 10px">
 											{bets?.find(
 												(bet) => bet.uid === user.id && match.id === bet.matchId
 											)?.rightTeam || 'N/A'}
@@ -216,7 +216,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 											height="16"
 											style={{ margin: '10px' }}
 										/>
-										<Typography>{match.rightTeam}</Typography>
+										<Typography fontWeight="600">{match.rightTeam}</Typography>
 									</Grid>
 								))}
 							</Grid>

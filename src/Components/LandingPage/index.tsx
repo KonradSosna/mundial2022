@@ -26,9 +26,10 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../App';
 import { motion } from 'framer-motion';
-import { isSameDay } from 'date-fns';
+import { isAfter, isBefore, isSameDay } from 'date-fns';
 import { matches } from '../ObstawMecz/matches';
 import Flag from 'react-world-flags';
+import { endOfDay } from 'date-fns/esm';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -93,8 +94,6 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 			0
 	);
 	const todayMatchesFiltered = [...todayMatches[0]];
-
-	console.log(bets);
 
 	return (
 		<>
@@ -166,58 +165,69 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 					Tak obstawiali
 				</Typography>
 
-				{users.map((user) => (
-					<Grid
-						key={user.id}
-						container
-						justifyContent="space-evenly"
-						alignItems="center"
-						borderBottom="1px solid white"
-					>
-						<Grid item>
-							<Typography fontSize="24px">
-								{user.name} {user.surname}
-							</Typography>
+				{isAfter(new Date(), new Date(todayMatchesFiltered[0].dateTime)) &&
+				isBefore(
+					new Date(),
+					endOfDay(new Date(todayMatchesFiltered[0].dateTime))
+				) ? (
+					users.map((user) => (
+						<Grid
+							key={user.id}
+							container
+							justifyContent="space-evenly"
+							alignItems="center"
+							borderBottom="1px solid white"
+						>
+							<Grid item>
+								<Typography fontSize="24px">
+									{user.name} {`"${user.nick}"`} {user.surname}
+								</Typography>
+							</Grid>
+							<Grid item>
+								{todayMatchesFiltered.map((match) => (
+									<Grid
+										item
+										key={match.id}
+										display="flex"
+										alignItems="center"
+										margin="10px"
+									>
+										<Typography>{match.leftTeam}</Typography>
+										<Flag
+											code={match.leftFlag}
+											fallback={<span>Unknown</span>}
+											height="16"
+											style={{ margin: '10px' }}
+										/>
+										<Typography margin="0 10px">
+											{bets?.find(
+												(bet) => bet.uid === user.id && match.id === bet.matchId
+											)?.leftTeam || 'N/A'}
+										</Typography>
+										<Typography>{'-'}</Typography>
+										<Typography margin="0 10px">
+											{bets?.find(
+												(bet) => bet.uid === user.id && match.id === bet.matchId
+											)?.rightTeam || 'N/A'}
+										</Typography>
+										<Flag
+											code={match.rightFlag}
+											fallback={<span>Unknown</span>}
+											height="16"
+											style={{ margin: '10px' }}
+										/>
+										<Typography>{match.rightTeam}</Typography>
+									</Grid>
+								))}
+							</Grid>
 						</Grid>
-						<Grid item>
-							{todayMatchesFiltered.map((match) => (
-								<Grid
-									item
-									key={match.id}
-									display="flex"
-									alignItems="center"
-									margin="10px"
-								>
-									<Typography>{match.leftTeam}</Typography>
-									<Flag
-										code={match.leftFlag}
-										fallback={<span>Unknown</span>}
-										height="16"
-										style={{ margin: '10px' }}
-									/>
-									<Typography margin="0 10px">
-										{bets?.find(
-											(bet) => bet.uid === user.id && match.id === bet.matchId
-										)?.leftTeam || 'N/A'}
-									</Typography>
-									<Typography>{'-'}</Typography>
-									<Typography margin="0 10px">
-										{bets?.find(
-											(bet) => bet.uid === user.id && match.id === bet.matchId
-										)?.rightTeam || 'N/A'}
-									</Typography>
-									<Flag
-										code={match.rightFlag}
-										fallback={<span>Unknown</span>}
-										height="16"
-										style={{ margin: '10px' }}
-									/>
-									<Typography>{match.rightTeam}</Typography>
-								</Grid>
-							))}
-						</Grid>
-					</Grid>
-				))}
+					))
+				) : (
+					<Typography fontSize="34px" fontWeight="600" margin="30px">
+						soon...
+						<CircularProgress />
+					</Typography>
+				)}
 			</Container>
 		</>
 	);

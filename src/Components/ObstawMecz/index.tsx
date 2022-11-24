@@ -5,7 +5,7 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { memo, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Container from '../LandingPage/Partials/Container';
 import FormButton from '../LandingPage/Partials/Button';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -22,13 +22,14 @@ import {
 } from 'firebase/firestore';
 import { db, authz } from '../../App';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { isAfter } from 'date-fns';
+import { isAfter, isToday } from 'date-fns';
 
 function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	const [edit, setEdit] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [bets, setBets] = useState<DocumentData[]>();
 	const [loading, setLoading] = useState(false);
+	const [loadingSubmit, setLoadingSubmit] = useState(false);
 
 	const StyledTextField = {
 		width: '60px',
@@ -50,9 +51,10 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	};
 
 	const user = useAuthState(authz);
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, resetField } = useForm();
 
 	const submitForm = async (data: FieldValues, matchId: number) => {
+		await setLoadingSubmit(true);
 		const bet = {
 			uid: user[0]?.uid,
 			matchId: matchId,
@@ -64,6 +66,10 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 			doc(db, 'bets', `${user[0]?.displayName} ${matchId.toString()}`),
 			bet
 		);
+		await setLoadingSubmit(false);
+
+		resetField('leftScore');
+		resetField('rightScore');
 		setEdit(false);
 	};
 
@@ -76,6 +82,18 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 			setLoading(false);
 		}
 	);
+
+	const myRef = useRef(null);
+	const executeScroll = (myRef: any) => {
+		if (myRef && myRef.current)
+			myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	};
+
+	useEffect(() => {
+		executeScroll(myRef);
+	}, [myRef]);
+
+	console.log(myRef);
 
 	return (
 		<>
@@ -147,8 +165,8 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 																type="number"
 																inputProps={{ min: 0, max: 20 }}
 																defaultValue={
-																	bets?.find((bet) => bet.matchId === match.id)
-																		?.leftTeam
+																	bets?.find((bet) => bet.matchId === index)
+																		?.leftTeam || 0
 																}
 															/>
 														) : (
@@ -174,7 +192,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 																inputProps={{ min: 0, max: 20 }}
 																defaultValue={
 																	bets?.find((bet) => bet.matchId === match.id)
-																		?.rightTeam
+																		?.rightTeam || 0
 																}
 															/>
 														) : (
@@ -217,11 +235,17 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 															<FormButton
 																text="Obstaw"
 																sx={{
-																	width: '80px',
-																	height: '30px',
 																	fontSize: '16px',
+																	minWidth: '80px',
+																	height: '30px',
 																}}
+																loading={loadingSubmit}
 																type="submit"
+																startIcon={
+																	loadingSubmit && (
+																		<CircularProgress color="info" size={20} />
+																	)
+																}
 															/>
 														)}
 													</Grid>
@@ -230,7 +254,10 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 										))}
 									</Grid>
 								</Grid>
-								<Grid item>
+								<Grid
+									item
+									ref={isToday(new Date(matchGroup[0].dateTime)) ? myRef : null}
+								>
 									<Typography fontWeight={600} fontSize="24px">
 										{matchGroup[0].date}
 									</Typography>

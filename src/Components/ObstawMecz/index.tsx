@@ -145,7 +145,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 													alignItems="center"
 													sx={{
 														maxWidth: '600px',
-														height: '80px',
+														minHeight: '80px',
 													}}
 													direction="row"
 													spacing={2}

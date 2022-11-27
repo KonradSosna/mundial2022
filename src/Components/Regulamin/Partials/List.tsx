@@ -5,15 +5,14 @@ import { memo } from 'react';
 const StyledListItem = styled(ListItem)({
 	listStyleType: 'disc',
 	display: 'list-item',
-	listStyleImage: 'url(/images/arrow.svg)',
 });
 
 function FormList() {
 	return (
 		<List sx={{ fontSize: '24px' }}>
-			<StyledListItem>Każda osoba wpłaca do puli 100 zł</StyledListItem>
+			<StyledListItem>Każda osoba wpłaca do puli 150 zł</StyledListItem>
 			<StyledListItem>
-				Pula nagród (700 zł) rozdzielana jest między trzech zwycięzców:
+				Pula nagród (900 zł) rozdzielana jest między trzech zwycięzców:
 				<StyledListItem>I miejsce: 400 zł</StyledListItem>
 				<StyledListItem>II miejsce: 200 zł</StyledListItem>
 				<StyledListItem>III miejsce: 100 zł</StyledListItem>
@@ -35,7 +34,6 @@ function FormList() {
 					III miejsce 100 zł (dzielone na dwie osoby)
 				</StyledListItem>
 			</StyledListItem>
-			<StyledListItem>Każda osoba wpłaca do puli 100 zł</StyledListItem>
 			<StyledListItem>
 				Termin typowania:
 				<StyledListItem>
@@ -45,28 +43,37 @@ function FormList() {
 				</StyledListItem>
 				<StyledListItem>
 					b) mecze fazy grupowej/pucharowej najpóźniej 1 godzinę przed
-					rozpoczęciem pierwszego spotkania z danego dnia. • typy meczów fazy
-					grupowej są wpisywane bezpośrednio w EXCEL/aplikacje przez każdego
-					gracza, • typy meczów fazy pucharowej wysyłane są do Grzesiu Zi w
-					prywatnej wiadomości.
+					rozpoczęciem pierwszego spotkania z danego dnia.
+					<StyledListItem>
+						typy meczów fazy grupowej są wpisywane bezpośrednio w aplikacje
+						przez każdego gracza
+					</StyledListItem>
 				</StyledListItem>
 			</StyledListItem>
 
 			<StyledListItem>
-				Sekretarz Rozgrywek Ograć Buka WorldCup2022 Grzesiu Zi
+				Sekretarz Rozgrywek Ograć Buka WorldCup2022: Grzesiu Zi
 			</StyledListItem>
 
 			<StyledListItem>
 				Zmiany w regulaminie (poza punktem 6.) mogą zostać przeprowadzone przez
-				Kapitułę Ograć Buka WorldCup2022: - przed rozpoczęciem WorldCup2022 -
-				reguła głosowania większościowego , - w trakcie WorldCup2022 reguła
-				jednomyślności głosowania.
+				Kapitułę Ograć Buka WorldCup2022:
+				<StyledListItem>przed rozpoczęciem WorldCup2022</StyledListItem>
+				<StyledListItem>reguła głosowania większościowego</StyledListItem>
+				<StyledListItem>
+					w trakcie WorldCup2022 reguła jednomyślności głosowania
+				</StyledListItem>
 			</StyledListItem>
 
 			<StyledListItem>
-				Kapituła Ograć Buka: - Konrad Gulak(?), - Grzegorz Kęsicki, - Tadeusz
-				Kubiak, - Bartosz Pawluk, - Konrad Sosna, - Ariel Stańczak, - Tomasz
-				Stańczak, - Grzesiu Zi.
+				Kapituła Ograć Buka:
+				<StyledListItem>Grzegorz Kęsicki</StyledListItem>
+				<StyledListItem>Tadeusz Kubiak</StyledListItem>
+				<StyledListItem>Bartosz Pawluk</StyledListItem>
+				<StyledListItem>Konrad Sosna</StyledListItem>
+				<StyledListItem>Ariel Stańczak</StyledListItem>
+				<StyledListItem>Tomasz Stańczak</StyledListItem>
+				<StyledListItem>Grzesiu Zi</StyledListItem>
 			</StyledListItem>
 		</List>
 	);

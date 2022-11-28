@@ -5,13 +5,14 @@ import { ButtonProps } from '@mui/material';
 import { motion } from 'framer-motion';
 
 interface TButtonProps extends ButtonProps {
-	text: string;
+	text: string | any;
 	variant?: 'contained' | 'outlined' | 'text';
 	sx?: CSSProperties | any;
 	onClick?: (v: any) => void;
 	disable?: boolean;
 	loading?: boolean;
 	type?: 'button' | 'submit' | 'reset';
+	dontAnimate?: boolean;
 }
 
 const FormButton: FC<TButtonProps> = ({
@@ -22,10 +23,11 @@ const FormButton: FC<TButtonProps> = ({
 	disable,
 	loading,
 	type,
+	dontAnimate,
 	...rest
 }) => {
 	return (
-		<motion.div whileHover={{ scale: 1.1 }}>
+		<motion.div whileHover={{ scale: dontAnimate ? 1 : 1.1 }}>
 			<LoadingButton
 				loading={loading}
 				onClick={onClick}

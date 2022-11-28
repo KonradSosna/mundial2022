@@ -1,8 +1,7 @@
+import { lazy, Suspense } from 'react';
 import Footer from './Components/Footer';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage';
-import ObstawMecz from './Components/ObstawMecz';
-import Regulamin from './Components/Regulamin';
 import Navbar from './Components/Navbar';
 import { CircularProgress, Grid, useMediaQuery, useTheme } from '@mui/material';
 import NavbarMobile from './Components/NavbarMobile';
@@ -21,6 +20,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Logo from './Components/Logo';
 import GoogleIcon from '@mui/icons-material/Google';
 import Container from './Components/LandingPage/Partials/Container';
+
+const ObstawMecz = lazy(() => import('./Components/ObstawMecz'));
+const Regulamin = lazy(() => import('./Components/Regulamin'));
 
 const app = initializeApp({
 	apiKey: 'AIzaSyBwMGQeuUtnIat0IEfSF1q_gB20wm875Ds',
@@ -104,6 +106,21 @@ export const SignOut = () => {
 	);
 };
 
+const FallbackComponent = () => {
+	return (
+		<Container
+			direction="column"
+			sx={{
+				backgroundColor: 'transparent',
+				justifyContent: 'center',
+				minHeight: '70vh',
+			}}
+		>
+			<CircularProgress />
+		</Container>
+	);
+};
+
 function App() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -127,14 +144,17 @@ function App() {
 				<>
 					{!isMobile ? <Navbar /> : <NavbarMobile />}
 
-					<Routes>
-						<Route path="/" element={<LandingPage isMobile={isMobile} />} />
-						<Route
-							path="/obstaw-mecz"
-							element={<ObstawMecz isMobile={isMobile} />}
-						/>
-						<Route path="/regulamin" element={<Regulamin />} />
-					</Routes>
+					<Suspense fallback={<FallbackComponent />}>
+						<Routes>
+							<Route path="/" element={<LandingPage isMobile={isMobile} />} />
+							<Route
+								path="/obstaw-mecz"
+								element={<ObstawMecz isMobile={isMobile} />}
+							/>
+							<Route path="/regulamin" element={<Regulamin />} />
+						</Routes>
+					</Suspense>
+					<FallbackComponent />
 
 					<Footer isMobile={isMobile} />
 				</>

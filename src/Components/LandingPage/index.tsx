@@ -30,6 +30,7 @@ import { isAfter, isBefore, isSameDay } from 'date-fns';
 import { matches } from '../ObstawMecz/matches';
 import Flag from 'react-world-flags';
 import { endOfDay } from 'date-fns/esm';
+import ScrollToTop from '../ScrollToTop';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -229,6 +230,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 					</Typography>
 				)}
 			</Container>
+			<ScrollToTop dontAnimate />
 		</>
 	);
 };

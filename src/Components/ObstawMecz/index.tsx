@@ -23,6 +23,7 @@ import {
 import { db, authz } from '../../App';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { isAfter, isToday } from 'date-fns';
+import ScrollToTop from '../ScrollToTop';
 
 function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	const [edit, setEdit] = useState(false);
@@ -268,6 +269,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 				</Grid>
 			</Container>
 			<Divider style={{ backgroundColor: 'white', margin: '30px 0' }} />
+			<ScrollToTop />
 		</>
 	);
 }

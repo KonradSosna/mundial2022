@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { memo } from 'react';
 import Container from '../LandingPage/Partials/Container';
+import ScrollToTop from '../ScrollToTop';
 import List from './Partials/List';
 
 function Regulamin() {
@@ -37,6 +38,7 @@ function Regulamin() {
 					<List />
 				</Typography>
 			</Grid>
+			<ScrollToTop />
 		</Container>
 	);
 }

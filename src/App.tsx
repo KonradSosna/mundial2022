@@ -154,7 +154,6 @@ function App() {
 							<Route path="/regulamin" element={<Regulamin />} />
 						</Routes>
 					</Suspense>
-					<FallbackComponent />
 
 					<Footer isMobile={isMobile} />
 				</>

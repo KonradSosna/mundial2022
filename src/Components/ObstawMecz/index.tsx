@@ -121,6 +121,17 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 				sx={{ justifyContent: 'center', marginTop: '30px' }}
 			>
 				<Grid container direction="column" rowGap={6}>
+					<Grid item>
+						<Typography
+							fontSize={40}
+							fontWeight={600}
+							textTransform="capitalize"
+							variant="h1"
+							textAlign="center"
+						>
+							1/8 Finału
+						</Typography>
+					</Grid>
 					{matches.map((matchGroup) => (
 						<>
 							<Divider style={{ backgroundColor: 'white' }} />

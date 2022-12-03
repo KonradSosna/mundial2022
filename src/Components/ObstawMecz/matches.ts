@@ -470,9 +470,9 @@ export const matches = [
 		{
 			id: 50,
 			leftTeam: 'Arentyna',
-			rightTeam: 'Senegal',
+			rightTeam: 'Australia',
 			leftFlag: 'AR',
-			rightFlag: 'SN',
+			rightFlag: 'AU',
 			date: 'Sob, 03.12',
 			dateTime: '2022-12-03T15:00:00',
 		},

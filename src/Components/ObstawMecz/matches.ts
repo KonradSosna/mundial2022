@@ -509,9 +509,9 @@ export const matches = [
 		},
 		{
 			id: 54,
-			leftTeam: 'TBA',
+			leftTeam: 'Brazylia',
 			rightTeam: 'Korea Południowa',
-			leftFlag: '',
+			leftFlag: 'BR',
 			rightFlag: 'KR',
 			date: 'Pon, 05.12',
 			dateTime: '2022-12-05T15:00:00',
@@ -530,9 +530,9 @@ export const matches = [
 		{
 			id: 56,
 			leftTeam: 'Portugalia',
-			rightTeam: 'TBA',
+			rightTeam: 'Szwajcaria',
 			leftFlag: 'PT',
-			rightFlag: '',
+			rightFlag: 'CH',
 			date: 'Wt, 06.12',
 			dateTime: '2022-12-06T15:00:00',
 		},

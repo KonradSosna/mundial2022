@@ -67,7 +67,7 @@ const styles = {
 	},
 };
 
-const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
+const LandingPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [users, setUsers] = useState<DocumentData[]>([]);
 	const [bets, setBets] = useState<DocumentData[]>();
@@ -134,6 +134,7 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 					<Table aria-label="simple table">
 						<TableHead>
 							<StyledTableRow>
+								<StyledTableCell align="center">Foto</StyledTableCell>
 								<StyledTableCell align="center">Zawodnik</StyledTableCell>
 								<StyledTableCell align="justify">Punkty</StyledTableCell>
 							</StyledTableRow>

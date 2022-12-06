@@ -70,6 +70,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 			leftTeam: data.leftScore,
 			rightTeam: data.rightScore,
 			winner: data.leftScore === data.rightScore ? data.winner : null,
+			photo: user[0]?.photoURL,
 		};
 
 		await setDoc(
@@ -102,8 +103,6 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	useEffect(() => {
 		executeScroll(myRef);
 	}, [myRef]);
-
-	console.log(myRef);
 
 	return (
 		<>

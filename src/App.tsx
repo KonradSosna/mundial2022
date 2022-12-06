@@ -146,7 +146,7 @@ function App() {
 
 					<Suspense fallback={<FallbackComponent />}>
 						<Routes>
-							<Route path="/" element={<LandingPage isMobile={isMobile} />} />
+							<Route path="/" element={<LandingPage />} />
 							<Route
 								path="/obstaw-mecz"
 								element={<ObstawMecz isMobile={isMobile} />}

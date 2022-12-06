@@ -134,7 +134,7 @@ const LandingPage = () => {
 					<Table aria-label="simple table">
 						<TableHead>
 							<StyledTableRow>
-								<StyledTableCell align="center">Foto</StyledTableCell>
+								{/* <StyledTableCell align="center">Foto</StyledTableCell> */}
 								<StyledTableCell align="center">Zawodnik</StyledTableCell>
 								<StyledTableCell align="justify">Punkty</StyledTableCell>
 							</StyledTableRow>

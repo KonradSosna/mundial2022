@@ -218,6 +218,33 @@ const LandingPage = ({ isMobile }: { isMobile: boolean }) => {
 											style={{ margin: '10px' }}
 										/>
 										<Typography fontWeight="600">{match.rightTeam}</Typography>
+										{bets?.find(
+											(bet) => bet.uid === user.id && match.id === bet.matchId
+										)?.winner && (
+											<>
+												<Typography marginLeft="10px">Awans:</Typography>
+
+												{bets?.find(
+													(bet) =>
+														bet.uid === user.id && match.id === bet.matchId
+												)?.winner ? (
+													<Flag
+														code={
+															bets?.find(
+																(bet) =>
+																	bet.uid === user.id &&
+																	match.id === bet.matchId
+															)?.winner || ''
+														}
+														fallback={<span>Unknown</span>}
+														height="16"
+														style={{ margin: '10px' }}
+													/>
+												) : (
+													'N/A'
+												)}
+											</>
+										)}
 									</Grid>
 								))}
 							</Grid>

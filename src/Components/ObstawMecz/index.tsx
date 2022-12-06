@@ -1,7 +1,11 @@
 import {
+	Box,
 	CircularProgress,
 	Divider,
+	FormControl,
 	Grid,
+	MenuItem,
+	Select,
 	TextField,
 	Typography,
 } from '@mui/material';
@@ -52,7 +56,11 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 	};
 
 	const user = useAuthState(authz);
-	const { register, handleSubmit, resetField } = useForm();
+	const { register, handleSubmit, resetField, watch } = useForm();
+
+	const winner = watch('winner');
+	const leftScore = watch('leftScore');
+	const rightScore = watch('rightScore');
 
 	const submitForm = async (data: FieldValues, matchId: number) => {
 		await setLoadingSubmit(true);
@@ -61,6 +69,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 			matchId: matchId,
 			leftTeam: data.leftScore,
 			rightTeam: data.rightScore,
+			winner: data.leftScore === data.rightScore ? data.winner : null,
 		};
 
 		await setDoc(
@@ -224,6 +233,59 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 															style={{ margin: '10px' }}
 														/>
 														<Typography>{match.rightTeam}</Typography>
+													</Grid>
+													<Grid item display="flex" alignItems="center">
+														{leftScore === rightScore ? (
+															<>
+																<Typography>Awans:</Typography>
+																{edit && index === match.id ? (
+																	<Box sx={{ minWidth: 120, color: 'white' }}>
+																		<FormControl fullWidth>
+																			<Select
+																				labelId="demo-simple-select-label"
+																				id="demo-simple-select"
+																				value={winner}
+																				label="Age"
+																				{...register('winner')}
+																				sx={StyledTextField}
+																				style={{
+																					width: '80px',
+																					marginLeft: '10px',
+																				}}
+																			>
+																				<MenuItem value={match.leftFlag}>
+																					<Flag
+																						code={match.leftFlag}
+																						fallback={<span>Unknown</span>}
+																						height="16"
+																					/>
+																				</MenuItem>
+																				<MenuItem value={match.rightFlag}>
+																					<Flag
+																						code={match.rightFlag}
+																						fallback={<span>Unknown</span>}
+																						height="16"
+																					/>
+																				</MenuItem>
+																			</Select>
+																		</FormControl>
+																	</Box>
+																) : bets?.find(
+																		(bet) => bet.matchId === match.id
+																  )?.winner ? (
+																	<Flag
+																		code={
+																			bets?.find(
+																				(bet) => bet.matchId === match.id
+																			)?.winner || ''
+																		}
+																		fallback={<span>Unknown</span>}
+																		height="16"
+																		style={{ margin: '10px' }}
+																	/>
+																) : null}
+															</>
+														) : null}
 													</Grid>
 													<Grid item>
 														{!edit && (

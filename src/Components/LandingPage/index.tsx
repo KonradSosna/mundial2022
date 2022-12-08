@@ -89,12 +89,19 @@ const LandingPage = () => {
 		setLoading(false);
 	});
 
-	const todayMatches = matches.filter(
+	console.log('1');
+
+	const todayMatches = matches?.filter(
 		(match) =>
 			match.filter((m) => isSameDay(new Date(), new Date(m.dateTime))).length >
 			0
 	);
-	const todayMatchesFiltered = [...todayMatches[0]];
+
+	console.log(todayMatches);
+
+	const todayMatchesFiltered = todayMatches.length ? [...todayMatches[0]] : [];
+
+	console.log('3');
 
 	return (
 		<>
@@ -167,10 +174,10 @@ const LandingPage = () => {
 					Tak obstawiali
 				</Typography>
 
-				{isAfter(new Date(), new Date(todayMatchesFiltered[0].dateTime)) &&
+				{isAfter(new Date(), new Date(todayMatchesFiltered[0]?.dateTime)) &&
 				isBefore(
 					new Date(),
-					endOfDay(new Date(todayMatchesFiltered[0].dateTime))
+					endOfDay(new Date(todayMatchesFiltered[0]?.dateTime))
 				) ? (
 					users.map((user) => (
 						<Grid

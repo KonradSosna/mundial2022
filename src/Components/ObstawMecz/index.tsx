@@ -70,7 +70,6 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 			leftTeam: data.leftScore,
 			rightTeam: data.rightScore,
 			winner: data.leftScore === data.rightScore ? data.winner : null,
-			photo: user[0]?.photoURL,
 		};
 
 		await setDoc(
@@ -137,7 +136,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 							variant="h1"
 							textAlign="center"
 						>
-							1/4 Finału
+							1/2 Finału
 						</Typography>
 					</Grid>
 					{matches.map((matchGroup) => (

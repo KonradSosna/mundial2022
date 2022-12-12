@@ -141,7 +141,7 @@ const LandingPage = () => {
 					<Table aria-label="simple table">
 						<TableHead>
 							<StyledTableRow>
-								{/* <StyledTableCell align="center">Foto</StyledTableCell> */}
+								<StyledTableCell align="center">Foto</StyledTableCell>
 								<StyledTableCell align="center">Zawodnik</StyledTableCell>
 								<StyledTableCell align="justify">Punkty</StyledTableCell>
 							</StyledTableRow>
@@ -155,6 +155,9 @@ const LandingPage = () => {
 										key={row.name}
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 									>
+										<StyledTableCell align="center" component="th" scope="row">
+											<img src={row.photo} height='40px' width='40px' alt='User'></img>
+										</StyledTableCell>
 										<StyledTableCell align="center" component="th" scope="row">
 											{`${row.name} ${row.surname}`}
 										</StyledTableCell>

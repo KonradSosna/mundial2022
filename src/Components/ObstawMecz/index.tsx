@@ -136,7 +136,7 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 							variant="h1"
 							textAlign="center"
 						>
-							1/2 Finału
+							Grande Finale
 						</Typography>
 					</Grid>
 					{matches.map((matchGroup) => (

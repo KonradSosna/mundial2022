@@ -599,17 +599,17 @@ export const matches = [
 	// 		dateTime: '2022-12-14T18:00:00',
 	// 	},
 	// ],
-	[
-		{
-			id: 63,
-			leftTeam: 'Chorwacja',
-			rightTeam: 'Maroko',
-			leftFlag: 'HR',
-			rightFlag: 'MA',
-			date: 'Sob, 14.12',
-			dateTime: '2022-12-17T14:00:00',
-		},
-	],
+	// [
+	// 	{
+	// 		id: 63,
+	// 		leftTeam: 'Chorwacja',
+	// 		rightTeam: 'Maroko',
+	// 		leftFlag: 'HR',
+	// 		rightFlag: 'MA',
+	// 		date: 'Sob, 14.12',
+	// 		dateTime: '2022-12-17T14:00:00',
+	// 	},
+	// ],
 	[
 		{
 			id: 64,

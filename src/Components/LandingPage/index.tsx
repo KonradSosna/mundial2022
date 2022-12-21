@@ -156,7 +156,12 @@ const LandingPage = () => {
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 									>
 										<StyledTableCell align="center" component="th" scope="row">
-											<img src={row.photo} height='40px' width='40px' alt='User'></img>
+											<img
+												src={row.photo}
+												height="40px"
+												width="40px"
+												alt="User"
+											></img>
 										</StyledTableCell>
 										<StyledTableCell align="center" component="th" scope="row">
 											{`${row.name} ${row.surname}`}
@@ -173,9 +178,9 @@ const LandingPage = () => {
 			</Container>
 
 			<Container direction="column">
-				<Typography fontSize="34px" fontWeight="600" margin="30px">
+				{/* <Typography fontSize="34px" fontWeight="600" margin="30px">
 					Tak obstawiali
-				</Typography>
+				</Typography> */}
 
 				{isAfter(new Date(), new Date(todayMatchesFiltered[0]?.dateTime)) &&
 				isBefore(
@@ -262,9 +267,12 @@ const LandingPage = () => {
 						</Grid>
 					))
 				) : (
+					// <Typography fontSize="34px" fontWeight="600" margin="30px">
+					// 	soon...
+					// 	<CircularProgress />
+					// </Typography>
 					<Typography fontSize="34px" fontWeight="600" margin="30px">
-						soon...
-						<CircularProgress />
+						Zapraszamy ponownie na Euro2024!
 					</Typography>
 				)}
 			</Container>

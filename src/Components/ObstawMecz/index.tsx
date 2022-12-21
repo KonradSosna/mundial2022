@@ -136,207 +136,218 @@ function ObstawMecz({ isMobile }: { isMobile: boolean }) {
 							variant="h1"
 							textAlign="center"
 						>
-							Grande Finale
+							Zapraszamy ponownie wkrótce
 						</Typography>
 					</Grid>
-					{matches.map((matchGroup) => (
-						<>
-							<Divider style={{ backgroundColor: 'white' }} />
-							<Grid
-								container
-								direction={isMobile ? 'column-reverse' : 'row'}
-								alignItems="center"
-								justifyContent="space-evenly"
-								className="match"
-							>
-								<Grid item>
-									<Grid container direction="column" rowGap={4}>
-										{matchGroup.map((match) => (
-											<form
-												key={match.id}
-												onSubmit={handleSubmit((data) =>
-													submitForm(data, match.id)
-												)}
-											>
-												<Grid
-													container
-													justifyContent="center"
-													alignItems="center"
-													sx={{
-														maxWidth: '600px',
-														minHeight: '80px',
-													}}
-													direction="row"
-													spacing={2}
+					{matches.length > 1 &&
+						matches.map((matchGroup) => (
+							<>
+								<Divider style={{ backgroundColor: 'white' }} />
+								<Grid
+									container
+									direction={isMobile ? 'column-reverse' : 'row'}
+									alignItems="center"
+									justifyContent="space-evenly"
+									className="match"
+								>
+									<Grid item>
+										<Grid container direction="column" rowGap={4}>
+											{matchGroup.map((match) => (
+												<form
+													key={match.id}
+													onSubmit={handleSubmit((data) =>
+														submitForm(data, match.id)
+													)}
 												>
-													<Grid item display="flex" alignItems="center">
-														<Typography>{match.leftTeam}</Typography>
-														<Flag
-															code={match.leftFlag}
-															fallback={<span>Unknown</span>}
-															height="16"
-															style={{ margin: '10px' }}
-														/>
-														{edit && index === match.id ? (
-															<TextField
-																{...register('leftScore', { required: true })}
-																sx={StyledTextField}
-																type="number"
-																inputProps={{ min: 0, max: 20 }}
-																defaultValue={
-																	bets?.find((bet) => bet.matchId === index)
-																		?.leftTeam || 0
-																}
+													<Grid
+														container
+														justifyContent="center"
+														alignItems="center"
+														sx={{
+															maxWidth: '600px',
+															minHeight: '80px',
+														}}
+														direction="row"
+														spacing={2}
+													>
+														<Grid item display="flex" alignItems="center">
+															<Typography>{match.leftTeam}</Typography>
+															<Flag
+																code={match.leftFlag}
+																fallback={<span>Unknown</span>}
+																height="16"
+																style={{ margin: '10px' }}
 															/>
-														) : (
-															<Typography>
-																{loading ? (
-																	<CircularProgress />
-																) : (
-																	bets?.find((bet) => bet.matchId === match.id)
-																		?.leftTeam || 0
-																)}
-															</Typography>
-														)}
-													</Grid>
-													<Grid item display="flex" alignItems="center">
-														<Typography>-</Typography>
-													</Grid>
-													<Grid item display="flex" alignItems="center">
-														{edit && index === match.id ? (
-															<TextField
-																{...register('rightScore', { required: true })}
-																sx={StyledTextField}
-																type="number"
-																inputProps={{ min: 0, max: 20 }}
-																defaultValue={
-																	bets?.find((bet) => bet.matchId === match.id)
-																		?.rightTeam || 0
-																}
+															{edit && index === match.id ? (
+																<TextField
+																	{...register('leftScore', { required: true })}
+																	sx={StyledTextField}
+																	type="number"
+																	inputProps={{ min: 0, max: 20 }}
+																	defaultValue={
+																		bets?.find((bet) => bet.matchId === index)
+																			?.leftTeam || 0
+																	}
+																/>
+															) : (
+																<Typography>
+																	{loading ? (
+																		<CircularProgress />
+																	) : (
+																		bets?.find(
+																			(bet) => bet.matchId === match.id
+																		)?.leftTeam || 0
+																	)}
+																</Typography>
+															)}
+														</Grid>
+														<Grid item display="flex" alignItems="center">
+															<Typography>-</Typography>
+														</Grid>
+														<Grid item display="flex" alignItems="center">
+															{edit && index === match.id ? (
+																<TextField
+																	{...register('rightScore', {
+																		required: true,
+																	})}
+																	sx={StyledTextField}
+																	type="number"
+																	inputProps={{ min: 0, max: 20 }}
+																	defaultValue={
+																		bets?.find(
+																			(bet) => bet.matchId === match.id
+																		)?.rightTeam || 0
+																	}
+																/>
+															) : (
+																<Typography marginRight="10px">
+																	{loading ? (
+																		<CircularProgress />
+																	) : (
+																		bets?.find(
+																			(bet) => bet.matchId === match.id
+																		)?.rightTeam || 0
+																	)}
+																</Typography>
+															)}
+															<Flag
+																code={match.rightFlag}
+																fallback={<span>Unknown</span>}
+																height="16"
+																style={{ margin: '10px' }}
 															/>
-														) : (
-															<Typography marginRight="10px">
-																{loading ? (
-																	<CircularProgress />
-																) : (
-																	bets?.find((bet) => bet.matchId === match.id)
-																		?.rightTeam || 0
-																)}
-															</Typography>
-														)}
-														<Flag
-															code={match.rightFlag}
-															fallback={<span>Unknown</span>}
-															height="16"
-															style={{ margin: '10px' }}
-														/>
-														<Typography>{match.rightTeam}</Typography>
+															<Typography>{match.rightTeam}</Typography>
+														</Grid>
+														<Grid item display="flex" alignItems="center">
+															{leftScore === rightScore ? (
+																<>
+																	<Typography>Awans:</Typography>
+																	{edit && index === match.id ? (
+																		<Box sx={{ minWidth: 120, color: 'white' }}>
+																			<FormControl fullWidth>
+																				<Select
+																					labelId="demo-simple-select-label"
+																					id="demo-simple-select"
+																					value={winner}
+																					label="Age"
+																					{...register('winner')}
+																					sx={StyledTextField}
+																					style={{
+																						width: '80px',
+																						marginLeft: '10px',
+																					}}
+																				>
+																					<MenuItem value={match.leftFlag}>
+																						<Flag
+																							code={match.leftFlag}
+																							fallback={<span>Unknown</span>}
+																							height="16"
+																						/>
+																					</MenuItem>
+																					<MenuItem value={match.rightFlag}>
+																						<Flag
+																							code={match.rightFlag}
+																							fallback={<span>Unknown</span>}
+																							height="16"
+																						/>
+																					</MenuItem>
+																				</Select>
+																			</FormControl>
+																		</Box>
+																	) : bets?.find(
+																			(bet) => bet.matchId === match.id
+																	  )?.winner ? (
+																		<Flag
+																			code={
+																				bets?.find(
+																					(bet) => bet.matchId === match.id
+																				)?.winner || ''
+																			}
+																			fallback={<span>Unknown</span>}
+																			height="16"
+																			style={{ margin: '10px' }}
+																		/>
+																	) : null}
+																</>
+															) : null}
+														</Grid>
+														<Grid item>
+															{!edit && (
+																<FormButton
+																	disable={isAfter(
+																		new Date(),
+																		new Date(match.dateTime)
+																	)}
+																	text="Edytuj"
+																	sx={{
+																		height: '30px',
+																		fontSize: '16px',
+																	}}
+																	onClick={() => {
+																		setEdit(true);
+																		setIndex(match.id);
+																	}}
+																/>
+															)}
+															{edit && index === match.id && (
+																<FormButton
+																	text="Obstaw"
+																	sx={{
+																		fontSize: '16px',
+																		minWidth: '80px',
+																		height: '30px',
+																	}}
+																	loading={loadingSubmit}
+																	type="submit"
+																	startIcon={
+																		loadingSubmit && (
+																			<CircularProgress
+																				color="info"
+																				size={20}
+																			/>
+																		)
+																	}
+																/>
+															)}
+														</Grid>
 													</Grid>
-													<Grid item display="flex" alignItems="center">
-														{leftScore === rightScore ? (
-															<>
-																<Typography>Awans:</Typography>
-																{edit && index === match.id ? (
-																	<Box sx={{ minWidth: 120, color: 'white' }}>
-																		<FormControl fullWidth>
-																			<Select
-																				labelId="demo-simple-select-label"
-																				id="demo-simple-select"
-																				value={winner}
-																				label="Age"
-																				{...register('winner')}
-																				sx={StyledTextField}
-																				style={{
-																					width: '80px',
-																					marginLeft: '10px',
-																				}}
-																			>
-																				<MenuItem value={match.leftFlag}>
-																					<Flag
-																						code={match.leftFlag}
-																						fallback={<span>Unknown</span>}
-																						height="16"
-																					/>
-																				</MenuItem>
-																				<MenuItem value={match.rightFlag}>
-																					<Flag
-																						code={match.rightFlag}
-																						fallback={<span>Unknown</span>}
-																						height="16"
-																					/>
-																				</MenuItem>
-																			</Select>
-																		</FormControl>
-																	</Box>
-																) : bets?.find(
-																		(bet) => bet.matchId === match.id
-																  )?.winner ? (
-																	<Flag
-																		code={
-																			bets?.find(
-																				(bet) => bet.matchId === match.id
-																			)?.winner || ''
-																		}
-																		fallback={<span>Unknown</span>}
-																		height="16"
-																		style={{ margin: '10px' }}
-																	/>
-																) : null}
-															</>
-														) : null}
-													</Grid>
-													<Grid item>
-														{!edit && (
-															<FormButton
-																disable={isAfter(
-																	new Date(),
-																	new Date(match.dateTime)
-																)}
-																text="Edytuj"
-																sx={{
-																	height: '30px',
-																	fontSize: '16px',
-																}}
-																onClick={() => {
-																	setEdit(true);
-																	setIndex(match.id);
-																}}
-															/>
-														)}
-														{edit && index === match.id && (
-															<FormButton
-																text="Obstaw"
-																sx={{
-																	fontSize: '16px',
-																	minWidth: '80px',
-																	height: '30px',
-																}}
-																loading={loadingSubmit}
-																type="submit"
-																startIcon={
-																	loadingSubmit && (
-																		<CircularProgress color="info" size={20} />
-																	)
-																}
-															/>
-														)}
-													</Grid>
-												</Grid>
-											</form>
-										))}
+												</form>
+											))}
+										</Grid>
+									</Grid>
+									<Grid
+										item
+										ref={
+											isToday(new Date(matchGroup[0].dateTime)) ? myRef : null
+										}
+									>
+										<Typography fontWeight={600} fontSize="24px">
+											{matchGroup[0].date}
+										</Typography>
 									</Grid>
 								</Grid>
-								<Grid
-									item
-									ref={isToday(new Date(matchGroup[0].dateTime)) ? myRef : null}
-								>
-									<Typography fontWeight={600} fontSize="24px">
-										{matchGroup[0].date}
-									</Typography>
-								</Grid>
-							</Grid>
-						</>
-					))}
+							</>
+						))}
 				</Grid>
 			</Container>
 			<Divider style={{ backgroundColor: 'white', margin: '30px 0' }} />

@@ -31,6 +31,7 @@ import { matches } from '../ObstawMecz/matches';
 import Flag from 'react-world-flags';
 import { endOfDay } from 'date-fns/esm';
 import ScrollToTop from '../ScrollToTop';
+import { BasicModal } from './Partials/Modal';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -71,6 +72,9 @@ const LandingPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [users, setUsers] = useState<DocumentData[]>([]);
 	const [bets, setBets] = useState<DocumentData[]>();
+
+	const [open, setOpen] = useState(true);
+	const handleClose = () => setOpen(false);
 
 	onSnapshot(
 		query(collection(db, 'users'), orderBy('score', 'desc')),
@@ -135,6 +139,8 @@ const LandingPage = () => {
 					</Grid>
 				</motion.div>
 			</Container>
+
+			{open && <BasicModal open={open} handleClose={handleClose} />}
 
 			<Container direction="row">
 				<TableContainer component={Paper} style={styles.paperContainer}>
